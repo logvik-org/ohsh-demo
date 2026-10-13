@@ -3,7 +3,8 @@ library ieee;
 
 library olo;
 
--- Sends back every byte received on the UART with the case of its letters swapped.
+-- Sends back every byte received on the UART, with the case of its letters
+-- swapped while swap_enable is set.
 entity uart_echo is
     generic (
         CLK_FREQ  : real;
@@ -12,6 +13,7 @@ entity uart_echo is
     port (
         clk         : in    std_logic;
         rst         : in    std_logic;
+        swap_enable : in    std_logic;
         uart_rx     : in    std_logic;
         uart_tx     : out   std_logic;
         rx_received : out   std_logic
@@ -68,9 +70,10 @@ begin
 
     i_transform : entity work.byte_transform
         port map (
-            clk       => clk,
-            rst       => rst,
-            in_valid  => fifo_valid,
+            clk         => clk,
+            rst         => rst,
+            swap_enable => swap_enable,
+            in_valid    => fifo_valid,
             in_ready  => fifo_ready,
             in_data   => fifo_data,
             out_valid => tx_valid,

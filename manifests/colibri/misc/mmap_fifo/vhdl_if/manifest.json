@@ -1,0 +1,12 @@
+{
+  "module": "colibri_vhdl_if",
+  "sources": [
+    "../../../../../lib/colibri/src/misc/mmap_fifo/vhdl_if/mmap_fifo_csr_pkg.vhdl",
+    "../../../../../lib/colibri/src/misc/mmap_fifo/vhdl_if/reg_utils.vhdl",
+    "../../../../../lib/colibri/src/misc/mmap_fifo/vhdl_if/mmap_fifo_csr.vhdl",
+    "../../../../../lib/colibri/src/misc/mmap_fifo/vhdl_if/rxfifo_csr_pkg.vhdl",
+    "../../../../../lib/colibri/src/misc/mmap_fifo/vhdl_if/rxfifo_csr.vhdl",
+    "../../../../../lib/colibri/src/misc/mmap_fifo/vhdl_if/txfifo_csr_pkg.vhdl",
+    "../../../../../lib/colibri/src/misc/mmap_fifo/vhdl_if/txfifo_csr.vhdl"
+  ]
+}

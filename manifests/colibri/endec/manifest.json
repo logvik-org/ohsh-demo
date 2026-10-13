@@ -1,0 +1,15 @@
+{
+  "module": "colibri_endec",
+  "sources": [
+    "../../../lib/colibri/src/endec/common_8b10b_pkg.vhdl",
+    "../../../lib/colibri/src/endec/decode_8b10b.vhdl",
+    "../../../lib/colibri/src/endec/encode_8b10b.vhdl",
+    "../../../lib/colibri/src/endec/rle_decode.vhdl",
+    "../../../lib/colibri/src/endec/rle_encode.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ]
+  }
+}

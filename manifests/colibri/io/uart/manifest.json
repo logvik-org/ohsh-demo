@@ -1,0 +1,8 @@
+{
+  "module": "colibri_uart",
+  "sources": [
+    "../../../../lib/colibri/src/io/uart/uart_rx.vhdl",
+    "../../../../lib/colibri/src/io/uart/uart_tx.vhdl",
+    "../../../../lib/colibri/src/io/uart/uart.vhdl"
+  ]
+}

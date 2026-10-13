@@ -1,0 +1,12 @@
+{
+  "module": "colibri_memory_mapped",
+  "sources": [
+    "../../../../lib/colibri/src/interfaces/memory_mapped/wb_ram.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_memory"
+    ]
+  }
+}

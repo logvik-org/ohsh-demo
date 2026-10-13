@@ -1,0 +1,11 @@
+{
+  "module": "colibri_i2c",
+  "sources": [
+    "../../../../lib/colibri/src/io/i2c/i2c_controller.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ]
+  }
+}

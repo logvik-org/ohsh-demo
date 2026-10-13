@@ -1,0 +1,12 @@
+{
+  "module": "colibri_include",
+  "sources": [
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/include/aurora_const_pkg.vhdl",
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/include/meta_buffer.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ]
+  }
+}

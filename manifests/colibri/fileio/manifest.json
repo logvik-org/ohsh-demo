@@ -1,0 +1,11 @@
+{
+  "module": "colibri_fileio",
+  "sources": [
+    "../../../lib/colibri/src/fileio/binaryio.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ]
+  }
+}

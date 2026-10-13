@@ -1,0 +1,21 @@
+{
+  "module": "colibri_misc",
+  "sources": [
+    "../../../lib/colibri/src/misc/be_add_lead.vhdl",
+    "../../../lib/colibri/src/misc/be_add_trail.vhdl",
+    "../../../lib/colibri/src/misc/be_remove_lead.vhdl",
+    "../../../lib/colibri/src/misc/be_remove_trail.vhdl",
+    "../../../lib/colibri/src/misc/frequency_counter.vhdl",
+    "../../../lib/colibri/src/misc/heartbeat.vhdl",
+    "../../../lib/colibri/src/misc/powerup_reset.vhdl",
+    "../../../lib/colibri/src/misc/stream_to_wbm.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ],
+    "work": [
+      "colibri_common"
+    ]
+  }
+}

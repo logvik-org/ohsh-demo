@@ -1,0 +1,29 @@
+{
+  "module": "colibri_memory",
+  "sources": [
+    "../../../lib/colibri/src/memory/bicam.vhdl",
+    "../../../lib/colibri/src/memory/cc_fifo.vhdl",
+    "../../../lib/colibri/src/memory/simple_dpram.vhdl",
+    "../../../lib/colibri/src/memory/cc_ram_fifo.vhdl",
+    "../../../lib/colibri/src/memory/fifo.vhdl",
+    "../../../lib/colibri/src/memory/packet_cc_fifo.vhdl",
+    "../../../lib/colibri/src/memory/packet_cc_ram_fifo.vhdl",
+    "../../../lib/colibri/src/memory/packet_fifo.vhdl",
+    "../../../lib/colibri/src/memory/ram.vhdl",
+    "../../../lib/colibri/src/memory/ring_buffer.vhdl",
+    "../../../lib/colibri/src/memory/rom.vhdl",
+    "../../../lib/colibri/src/memory/simple_dpram_be.vhdl",
+    "../../../lib/colibri/src/memory/true_dpram.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_comms",
+      "colibri_mem_pkg"
+    ],
+    "work": [
+      "colibri_common",
+      "colibri_optimized"
+    ]
+  }
+}

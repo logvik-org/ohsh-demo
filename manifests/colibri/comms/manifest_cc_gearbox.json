@@ -1,0 +1,12 @@
+{
+  "module": "colibri_cc_gearbox",
+  "sources": [
+    "../../../lib/colibri/src/comms/cc_gearbox.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_memory",
+      "colibri_common"
+    ]
+  }
+}

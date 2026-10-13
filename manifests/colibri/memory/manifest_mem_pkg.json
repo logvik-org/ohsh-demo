@@ -1,0 +1,11 @@
+{
+  "module": "colibri_mem_pkg",
+  "sources": [
+    "../../../lib/colibri/src/memory/mem_pkg.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ]
+  }
+}

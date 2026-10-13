@@ -1,0 +1,20 @@
+{
+  "module": "colibri_comms",
+  "sources": [
+    "../../../lib/colibri/src/comms/scrambler.vhdl",
+    "../../../lib/colibri/src/comms/bert.vhdl",
+    "../../../lib/colibri/src/comms/bit_shifter.vhdl",
+    "../../../lib/colibri/src/comms/crc.vhdl",
+    "../../../lib/colibri/src/comms/descrambler.vhdl",
+    "../../../lib/colibri/src/comms/gearbox.vhdl",
+    "../../../lib/colibri/src/comms/slip_buffer.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ],
+    "work": [
+      "colibri_common"
+    ]
+  }
+}

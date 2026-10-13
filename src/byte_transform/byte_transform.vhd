@@ -4,11 +4,12 @@ library ieee;
 library demo_common;
     use demo_common.demo_pkg.all;
 
--- Registered valid/ready stage that swaps the case of each byte.
+-- Registered valid/ready stage that swaps the case of each byte while swap_enable is set.
 entity byte_transform is
     port (
         clk       : in    std_logic;
-        rst       : in    std_logic;
+        rst         : in    std_logic;
+        swap_enable : in    std_logic;
         in_valid  : in    std_logic;
         in_ready  : out   std_logic;
         in_data   : in    byte_t;
@@ -32,7 +33,7 @@ begin
         if rising_edge(clk) then
             if out_ready = '1' or out_valid_r = '0' then
                 out_valid_r <= in_valid;
-                out_data    <= swap_case(in_data);
+                out_data    <= swap_case(in_data) when swap_enable = '1' else in_data;
             end if;
             if rst = '1' then
                 out_valid_r <= '0';

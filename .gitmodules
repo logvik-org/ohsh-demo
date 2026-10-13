@@ -4,3 +4,6 @@
 [submodule "lib/open-logic"]
 	path = lib/open-logic
 	url = https://github.com/open-logic/open-logic.git
+[submodule "lib/colibri"]
+	path = lib/colibri
+	url = https://gitlab.cern.ch/colibri/colibri.git

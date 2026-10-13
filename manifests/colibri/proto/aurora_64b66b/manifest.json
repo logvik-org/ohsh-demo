@@ -1,0 +1,21 @@
+{
+  "module": "colibri_aurora_64b66b",
+  "sources": [
+    "../../../../lib/colibri/src/proto/aurora_64b66b/aurora_rx.vhdl",
+    "../../../../lib/colibri/src/proto/aurora_64b66b/aurora_tx.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_comms",
+      "colibri_rx",
+      "colibri_tx",
+      "colibri_cc_gearbox"
+    ],
+    "work": [
+      "colibri_common",
+      "colibri_include",
+      "colibri_rx"
+    ]
+  }
+}

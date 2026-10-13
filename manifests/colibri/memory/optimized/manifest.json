@@ -1,0 +1,15 @@
+{
+  "module": "colibri_optimized",
+  "sources": [
+    "../../../../lib/colibri/src/memory/optimized/simple_dpram_altera.vhdl",
+    "../../../../lib/colibri/src/memory/optimized/simple_dpram_xilinx.vhdl",
+    "../../../../lib/colibri/src/memory/optimized/true_dpram_altera.vhdl",
+    "../../../../lib/colibri/src/memory/optimized/true_dpram_xilinx.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_mem_pkg"
+    ]
+  }
+}

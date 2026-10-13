@@ -1,0 +1,18 @@
+{
+  "module": "colibri_mmap_fifo",
+  "sources": [
+    "../../../../lib/colibri/src/misc/mmap_fifo/mmap_fifo_rx.vhdl",
+    "../../../../lib/colibri/src/misc/mmap_fifo/mmap_fifo_tx.vhdl",
+    "../../../../lib/colibri/src/misc/mmap_fifo/mmap_fifo.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_memory"
+    ],
+    "work": [
+      "colibri_common",
+      "colibri_vhdl_if"
+    ]
+  }
+}

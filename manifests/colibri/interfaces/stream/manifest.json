@@ -1,0 +1,24 @@
+{
+  "module": "colibri_stream",
+  "sources": [
+    "../../../../lib/colibri/src/interfaces/stream/avst_cdc.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/avst_fifo.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/avst_ram_read.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/avst_ram_read_unaligned.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/avst_ram_write.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/avst_ram_write_unaligned.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/avst_to_axis.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/avst_width_converter.vhdl",
+    "../../../../lib/colibri/src/interfaces/stream/axis_to_avst.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_memory"
+    ],
+    "work": [
+      "colibri_common",
+      "colibri_memory"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "module": "colibri_packet",
+  "sources": [
+    "../../../lib/colibri/src/packet/broadcaster.vhdl",
+    "../../../lib/colibri/src/packet/deinterleaver.vhdl",
+    "../../../lib/colibri/src/packet/header_add.vhdl",
+    "../../../lib/colibri/src/packet/header_remove.vhdl",
+    "../../../lib/colibri/src/packet/interleaver.vhdl",
+    "../../../lib/colibri/src/packet/packet_delay.vhdl",
+    "../../../lib/colibri/src/packet/packet_join.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_misc"
+    ],
+    "work": [
+      "colibri_common",
+      "colibri_stream"
+    ]
+  }
+}

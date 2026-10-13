@@ -1,0 +1,23 @@
+{
+  "module": "colibri_common",
+  "sources": [
+    "../../../lib/colibri/src/common/utils.vhdl",
+    "../../../lib/colibri/src/common/encoders.vhdl",
+    "../../../lib/colibri/src/common/types.vhdl",
+    "../../../lib/colibri/src/common/common.vhdl",
+    "../../../lib/colibri/src/common/comparator.vhdl",
+    "../../../lib/colibri/src/common/counter.vhdl",
+    "../../../lib/colibri/src/common/debouncer.vhdl",
+    "../../../lib/colibri/src/common/edge_detect.vhdl",
+    "../../../lib/colibri/src/common/pipeline_buffer.vhdl",
+    "../../../lib/colibri/src/common/poly_pkg.vhdl",
+    "../../../lib/colibri/src/common/skid_buffer.vhdl",
+    "../../../lib/colibri/src/common/stream_buffer.vhdl",
+    "../../../lib/colibri/src/common/stream_buffer_generic.vhdl",
+    "../../../lib/colibri/src/common/synchro.vhdl",
+    "../../../lib/colibri/src/common/synchro_generic.vhdl",
+    "../../../lib/colibri/src/common/synchro_reset.vhdl",
+    "../../../lib/colibri/src/common/synchro_handshake.vhdl",
+    "../../../lib/colibri/src/common/synchro_pulse.vhdl"
+  ]
+}

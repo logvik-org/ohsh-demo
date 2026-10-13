@@ -1,0 +1,6 @@
+{
+  "module": "colibri_pipes",
+  "sources": [
+    "../../../lib/colibri/src/pipes/arbiter.vhdl"
+  ]
+}

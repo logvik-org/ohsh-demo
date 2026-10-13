@@ -1,0 +1,12 @@
+{
+  "module": "colibri_spi",
+  "sources": [
+    "../../../../lib/colibri/src/io/spi/spi_master.vhdl",
+    "../../../../lib/colibri/src/io/spi/spi_slave.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "module": "colibri_rx",
+  "sources": [
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/rx/aurora_st_decoder.vhdl",
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/rx/block_sync_fsm.vhdl",
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/rx/gearbox_up.vhdl",
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/rx/cc_gearbox_up.vhdl",
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/rx/channel_bond.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common",
+      "colibri_memory"
+    ],
+    "work": [
+      "colibri_common",
+      "colibri_include",
+      "colibri_memory"
+    ]
+  }
+}

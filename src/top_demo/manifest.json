@@ -4,6 +4,9 @@
     "top_demo.vhd"
   ],
   "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ],
     "olo": [
       "open_logic"
     ],

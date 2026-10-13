@@ -1,0 +1,14 @@
+{
+  "module": "colibri_tx",
+  "sources": [
+    "../../../../../lib/colibri/src/proto/aurora_64b66b/tx/aurora_st_encoder.vhdl"
+  ],
+  "dependencies": {
+    "colibri": [
+      "colibri_common"
+    ],
+    "work": [
+      "colibri_include"
+    ]
+  }
+}

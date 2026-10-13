@@ -6,24 +6,29 @@ library std;
     use std.env.all;
 
 -- Sends a message to top_demo over its UART and checks that it comes back
--- with the case of every letter swapped.
+-- with the case of every letter swapped. Then presses the button, which turns
+-- the swapping off, and checks that the next message comes back unchanged.
 entity tb_top_demo is
 end entity;
 
 architecture sim of tb_top_demo is
 
-    constant CLK_FREQ    : real := 100.0e6;
+    constant CLK_FREQ      : real := 100.0e6;
+    constant DEBOUNCE_TIME : time := 2 us;
     constant BAUD_RATE   : real := 1.0e6;
     constant CLK_PERIOD  : time := 1 sec / CLK_FREQ;
     constant BIT_PERIOD  : time := 1 sec / BAUD_RATE;
     constant MESSAGE     : string := "Hello, ohsh!";
-    constant EXPECTED    : string := "hELLO, OHSH!";
+    constant SWAPPED     : string := "hELLO, OHSH!";
 
     signal clk     : std_logic := '0';
     signal rst_n   : std_logic := '0';
     signal uart_rx : std_logic := '1';
     signal uart_tx : std_logic;
+    signal btn     : std_logic := '0';
     signal led     : std_logic;
+
+    signal first_checked : boolean := false;
 
     procedure send_byte (signal line : out std_logic; byte : character) is
         constant BITS : std_logic_vector(7 downto 0) :=
@@ -58,14 +63,16 @@ begin
 
     i_dut : entity work.top_demo
         generic map (
-            CLK_FREQ  => CLK_FREQ,
-            BAUD_RATE => BAUD_RATE
+            CLK_FREQ      => CLK_FREQ,
+            BAUD_RATE     => BAUD_RATE,
+            DEBOUNCE_TIME => DEBOUNCE_TIME
         )
         port map (
             clk     => clk,
             rst_n   => rst_n,
             uart_rx => uart_rx,
             uart_tx => uart_tx,
+            btn     => btn,
             led     => led
         );
 
@@ -77,26 +84,49 @@ begin
         for i in MESSAGE'range loop
             send_byte(uart_rx, MESSAGE(i));
         end loop;
+
+        wait until first_checked;
+        -- A bouncing press, which the debouncer has to turn into one.
+        for bounce in 1 to 3 loop
+            btn <= '1';
+            wait for DEBOUNCE_TIME / 4;
+            btn <= '0';
+            wait for DEBOUNCE_TIME / 4;
+        end loop;
+        btn <= '1';
+        wait for 2 * DEBOUNCE_TIME;
+        btn <= '0';
+        wait for 2 * DEBOUNCE_TIME;
+
+        for i in MESSAGE'range loop
+            send_byte(uart_rx, MESSAGE(i));
+        end loop;
         wait;
     end process;
 
     p_check : process is
-        variable received : character;
+        procedure receive_message (expected : string) is
+            variable received : character;
+        begin
+            for i in expected'range loop
+                receive_byte(uart_tx, received);
+                assert received = expected(i)
+                    report "Byte " & integer'image(i) & ": expected '" & expected(i)
+                        & "', received '" & received & "'"
+                    severity failure;
+            end loop;
+        end procedure;
     begin
-        for i in EXPECTED'range loop
-            receive_byte(uart_tx, received);
-            assert received = EXPECTED(i)
-                report "Byte " & integer'image(i) & ": expected '" & EXPECTED(i)
-                    & "', received '" & received & "'"
-                severity failure;
-        end loop;
+        receive_message(SWAPPED);
+        first_checked <= true;
+        receive_message(MESSAGE);
         report "tb_top_demo: PASS";
         finish;
     end process;
 
     p_timeout : process is
     begin
-        wait for (MESSAGE'length + 4) * 12 * BIT_PERIOD;
+        wait for 2 * (MESSAGE'length + 4) * 12 * BIT_PERIOD + 10 * DEBOUNCE_TIME;
         report "tb_top_demo: timed out" severity failure;
         wait;
     end process;
