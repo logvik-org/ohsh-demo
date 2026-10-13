@@ -1,0 +1,6 @@
+[submodule "Hog"]
+	path = Hog
+	url = https://gitlab.com/hog-cern/Hog.git
+[submodule "lib/open-logic"]
+	path = lib/open-logic
+	url = https://github.com/open-logic/open-logic.git

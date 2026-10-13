@@ -1,0 +1,6 @@
+{
+  "module": "demo_pkg",
+  "sources": [
+    "demo_pkg.vhd"
+  ]
+}

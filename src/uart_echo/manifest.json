@@ -1,0 +1,14 @@
+{
+  "module": "uart_echo",
+  "sources": [
+    "uart_echo.vhd"
+  ],
+  "dependencies": {
+    "olo": [
+      "open_logic"
+    ],
+    "work": [
+      "byte_transform"
+    ]
+  }
+}

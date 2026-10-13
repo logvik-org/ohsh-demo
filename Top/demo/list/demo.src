@@ -1,0 +1,3 @@
+src/byte_transform/byte_transform.vhd
+src/uart_echo/uart_echo.vhd
+src/top_demo/top_demo.vhd top=top_demo

@@ -1,0 +1,14 @@
+{
+  "module": "top_demo",
+  "sources": [
+    "top_demo.vhd"
+  ],
+  "dependencies": {
+    "olo": [
+      "open_logic"
+    ],
+    "work": [
+      "uart_echo"
+    ]
+  }
+}

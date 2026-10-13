@@ -1,0 +1,11 @@
+#Simulator ghdl
+# Written by hand: ohsh writes the .src lists of the design, the testbench is
+# listed here. The simulation set is named after the design's library, because
+# hog compiles the testbench into a library named after the simulation set.
+
+[files]
+tb/tb_top_demo/tb_top_demo.vhd
+
+[properties]
+top=tb_top_demo
+options=--std=08 -frelaxed -Wno-hide -Wno-shared

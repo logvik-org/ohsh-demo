@@ -1,0 +1,6 @@
+{
+  "module": "open_logic",
+  "source_lists": [
+    "../../lib/open-logic/compile_order.txt"
+  ]
+}

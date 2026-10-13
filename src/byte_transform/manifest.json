@@ -1,0 +1,11 @@
+{
+  "module": "byte_transform",
+  "sources": [
+    "byte_transform.vhd"
+  ],
+  "dependencies": {
+    "demo_common": [
+      "demo_pkg"
+    ]
+  }
+}
