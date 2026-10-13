@@ -3,3 +3,6 @@ build/
 
 # Written by hog
 Projects/
+
+# Written by ohsh from the manifests, see Top/demo/pre-creation.tcl
+Top/demo/list/*.src

@@ -44,9 +44,6 @@ jobs:
       - name: Check the manifests
         run: scripts/check-manifests.sh
 
-      - name: Check the hog list files
-        run: scripts/check-hog-lists.sh
-
       - name: Simulate with GHDL
         run: scripts/sim-ghdl.sh
 

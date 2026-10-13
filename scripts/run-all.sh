@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SCRIPTS="$(cd "$(dirname "$0")" && pwd)"
-for check in check-manifests check-hog-lists sim-ghdl sim-nvc sim-hog; do
+for check in check-manifests sim-ghdl sim-nvc sim-hog; do
   echo "=== $check"
   "$SCRIPTS/$check.sh"
 done

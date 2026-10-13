@@ -30,7 +30,7 @@ ohsh-demo/
 │   ├── pre-creation.tcl     runs ohsh every time hog creates the project
 │   └── list/
 │       ├── demo.src         ┐
-│       ├── demo_common.src  ├ written by ohsh, committed
+│       ├── demo_common.src  ├ written by ohsh, not in git
 │       ├── olo.src          ┘
 │       ├── constraints.con  written by hand
 │       └── demo.sim         written by hand, the GHDL simulation set
@@ -83,10 +83,18 @@ the `.src` lists always match the manifests when Vivado reads them:
 ./Hog/Do CREATE demo      # needs Vivado and ohsh on PATH
 ```
 
-The lists are also committed, because hog's GHDL simulation reads them without
-creating a project. `scripts/check-hog-lists.sh` fails when they are out of
-date. The constraints and the simulation set are not HDL sources, so they are
-in list files written by hand.
+The lists are build output, so git ignores them. A fresh clone has none until
+hog creates the project, and hog's GHDL simulation reads them without creating
+one, so write them first with `scripts/run-hog-hook.sh`, which runs
+`pre-creation.tcl` the way hog does:
+
+```bash
+scripts/run-hog-hook.sh
+./Hog/Do SIMULATION demo -simset demo
+```
+
+The constraints and the simulation set are not HDL sources, so they are in list
+files written by hand and committed.
 
 ## Running the checks
 
@@ -102,10 +110,9 @@ scripts/run-all.sh
 | Script | What it checks |
 |---|---|
 | `check-manifests.sh` | `ohsh --check` finds no missing dependency or misordered sources. |
-| `check-hog-lists.sh` | `pre-creation.tcl` runs the way hog runs it and leaves the committed lists unchanged. |
 | `sim-ghdl.sh` | GHDL compiles every library in the order of `libraries.src` and the testbench passes. |
 | `sim-nvc.sh` | The same with NVC. |
-| `sim-hog.sh` | `./Hog/Do SIMULATION demo` runs the testbench with GHDL from the hog lists. |
+| `sim-hog.sh` | `pre-creation.tcl` writes the hog lists the way hog runs it, then `./Hog/Do SIMULATION demo` runs the testbench with GHDL from them. |
 
 CI runs all of them on every pull request.
 
