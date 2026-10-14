@@ -1,0 +1,20 @@
+{
+  "module": "tb_top_demo_uvvm",
+  "sources": [
+    "tb_top_demo_uvvm.vhd"
+  ],
+  "dependencies": {
+    "bitvis_vip_uart": [
+      "bitvis_vip_uart"
+    ],
+    "uvvm_util": [
+      "uvvm_util"
+    ],
+    "uvvm_vvc_framework": [
+      "uvvm_vvc_framework"
+    ],
+    "work": [
+      "top_demo"
+    ]
+  }
+}

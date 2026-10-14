@@ -30,8 +30,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install ohsh
-        run: pip install "ohsh==0.5.0"
+      - name: Install ohsh and VUnit
+        run: pip install "ohsh==0.5.0" "vunit-hdl==4.7.1"
 
       - name: Install tcllib
         run: sudo apt-get update && sudo apt-get install -y tcllib
@@ -54,6 +54,9 @@ jobs:
 
       - name: Simulate with NVC
         run: scripts/sim-nvc.sh
+
+      - name: Simulate with VUnit
+        run: scripts/sim-vunit.sh
 
       - name: Simulate with hog
         run: scripts/sim-hog.sh

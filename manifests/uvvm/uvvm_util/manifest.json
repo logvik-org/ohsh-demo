@@ -1,0 +1,6 @@
+{
+  "module": "uvvm_util",
+  "source_lists": [
+    "../../../lib/uvvm/uvvm_util/script/compile_order.txt"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "module": "tb_top_demo_osvvm",
+  "sources": [
+    "tb_top_demo_osvvm.vhd"
+  ],
+  "dependencies": {
+    "osvvm": [
+      "osvvm"
+    ],
+    "work": [
+      "top_demo"
+    ]
+  }
+}

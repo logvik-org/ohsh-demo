@@ -2,14 +2,21 @@
 
 A small FPGA design laid out as a [hog](https://hog.readthedocs.io) repository,
 used to test [ohsh](https://github.com/logvik-org/ohsh) in an environment like
-a real project's: hog and two third-party HDL libraries as git submodules,
-several libraries, and a source tree that is more than a handful of files.
+a real project's: hog, two third-party HDL libraries and two verification
+libraries as git submodules, several libraries, and a source tree that is more
+than a handful of files.
 
 The design receives bytes on a UART and sends them back with the case of every
 letter swapped. A button turns the swapping off and on again. It uses
 [Open Logic](https://github.com/open-logic/open-logic) for the UART, the FIFO
 and the reset synchronizer, and [colibri](https://gitlab.cern.ch/colibri/colibri)
 to synchronize, debounce and detect the presses of the button.
+
+The same test is written four times, once plainly and once with each of
+[UVVM](https://github.com/UVVM/UVVM), [OSVVM](https://github.com/OSVVM/OSVVM)
+and [VUnit](https://vunit.github.io): a message goes in over the UART and comes
+back with its case swapped, then the button is pressed and the next message
+comes back unchanged.
 
 ## Layout
 
@@ -18,16 +25,24 @@ ohsh-demo/
 ├── Hog/                     hog, a git submodule
 ├── lib/
 │   ├── open-logic/          Open Logic, a git submodule (with en_cl_fix inside)
-│   └── colibri/             colibri, a git submodule
-├── manifests/
-│   ├── open-logic/          ohsh manifest for Open Logic, see below
-│   └── colibri/             ohsh manifests for colibri, see below
+│   ├── colibri/             colibri, a git submodule
+│   ├── uvvm/                UVVM, a git submodule
+│   └── osvvm/               OSVVM, a git submodule
+├── manifests/               ohsh manifests for the submodules, see below
+│   ├── open-logic/
+│   ├── colibri/
+│   ├── uvvm/
+│   └── osvvm/
 ├── src/                     the design, one directory and manifest per module
 │   ├── demo_pkg/            library demo_common
 │   ├── byte_transform/      library demo (the top library)
 │   ├── uart_echo/           library demo
 │   └── top_demo/            library demo, the top entity
-├── tb/tb_top_demo/          self-checking testbench, with manifest_tb.json
+├── tb/                      the testbenches, each with a manifest_tb.json
+│   ├── tb_top_demo/         plain VHDL
+│   ├── tb_top_demo_uvvm/    UVVM, with its UART VVC
+│   ├── tb_top_demo_osvvm/   OSVVM, with a scoreboard
+│   └── tb_top_demo_vunit/   VUnit, two test cases, and its run.py
 ├── constraints/             Arty A7-35T pins and clock
 ├── Top/demo/
 │   ├── hog.conf
@@ -47,14 +62,16 @@ ohsh-demo/
 | `olo` | `open_logic` | `lib/open-logic`, through `manifests/open-logic` |
 | `colibri` | `colibri_common` and 22 more | `lib/colibri`, through `manifests/colibri` |
 | `demo_common` | `demo_pkg` | `src/` |
-| `demo` | `byte_transform`, `uart_echo`, `top_demo`, `tb_top_demo` | `src/`, `tb/` |
+| `uvvm_util`, `uvvm_vvc_framework`, `bitvis_vip_scoreboard`, `bitvis_vip_uart` | one each, of the same name | `lib/uvvm`, through `manifests/uvvm` |
+| `osvvm` | `osvvm` | `lib/osvvm`, through `manifests/osvvm` |
+| `demo` | `byte_transform`, `uart_echo`, `top_demo` and the four testbenches | `src/`, `tb/` |
 
 ## Third-party libraries
 
-Neither library has ohsh manifests, and the files of a submodule cannot be
-changed without forking it. Their manifests therefore live in this repository,
-under `manifests/`, and point into the submodules. Each library shows one of
-two ways to write them.
+None of the libraries has ohsh manifests, and the files of a submodule cannot
+be changed without forking it. Their manifests therefore live in this
+repository, under `manifests/`, and point into the submodules. Between them the
+libraries show the three ways to write them.
 
 ### Open Logic: one manifest that reads the library's compile order
 
@@ -105,10 +122,51 @@ afterwards, which is typical for a library of this size:
 The design only uses `colibri_common`, so only its 18 files end up in
 `colibri.src`, not the whole library.
 
+### UVVM: one manifest per library, each reading its compile order
+
+UVVM ships the compile order of each of its libraries in
+`<library>/script/compile_order.txt`, with paths relative to that file. So, as
+for Open Logic, each manifest only points at that file, for example
+`manifests/uvvm/bitvis_vip_uart/manifest.json`:
+
+```json
+{
+  "module": "bitvis_vip_uart",
+  "source_lists": [
+    "../../../lib/uvvm/bitvis_vip_uart/script/compile_order.txt"
+  ],
+  "dependencies": {
+    "uvvm_util": ["uvvm_util"],
+    "uvvm_vvc_framework": ["uvvm_vvc_framework"],
+    "bitvis_vip_scoreboard": ["bitvis_vip_scoreboard"]
+  }
+}
+```
+
+Only the four libraries the UART VVC needs have manifests. UVVM has many more
+VIPs, which get a manifest the same way when a testbench needs one.
+
+### OSVVM: a manifest written by hand
+
+OSVVM's compile order is `osvvm.pro`, a script that picks some files by
+simulator and VHDL version, so no list file to point at exists.
+`manifests/osvvm/manifest.json` lists the files by hand, as `osvvm.pro` picks
+them for VHDL-2008 on GHDL and NVC: the `deprecated/*_c.vhd` variants where the
+2019 versions need VHDL-2019, and the default settings packages. A newer OSVVM
+may change that list, so compare it with `osvvm.pro` when updating.
+
+### VUnit
+
+VUnit is installed with pip and brings its own `vunit_lib`, so it needs no
+manifest. `tb/tb_top_demo_vunit/run.py` runs ohsh and adds every library in
+`libraries.src` to VUnit with its sources. VUnit works out the compile order
+itself, so it only uses the lists to know which files go into which library.
+
 ### When a library is updated
 
-Update the submodule, then run `ohsh --check -t .`. The Open Logic manifest
-follows its compile order without changes. For colibri, run the `--create`
+Update the submodule, then run `ohsh --check -t .`. The Open Logic and UVVM
+manifests follow their compile orders without changes, and the OSVVM one needs
+comparing with `osvvm.pro`. For colibri, run the `--create`
 command again to get manifests for new directories, and `--fix` for new
 dependencies.
 
@@ -134,10 +192,15 @@ scripts/run-hog-hook.sh
 The constraints and the simulation set are not HDL sources, so they are in list
 files written by hand and committed.
 
+hog's simulation runs the plain testbench only. hog puts every file of a
+simulation set into one library named after the set, while UVVM and OSVVM must
+each be compiled into libraries of their own.
+
 ## Running the checks
 
-Install ohsh, [GHDL](https://github.com/ghdl/ghdl), [NVC](https://www.nickg.me.uk/nvc/)
-and `tclsh` with tcllib, then:
+Install ohsh and VUnit (`pip install ohsh vunit-hdl`),
+[GHDL](https://github.com/ghdl/ghdl), [NVC](https://www.nickg.me.uk/nvc/) and
+`tclsh` with tcllib, then:
 
 ```bash
 git clone --recurse-submodules https://github.com/logvik-org/ohsh-demo.git
@@ -148,8 +211,9 @@ scripts/run-all.sh
 | Script | What it checks |
 |---|---|
 | `check-manifests.sh` | `ohsh --check` finds no missing dependency or misordered sources. |
-| `sim-ghdl.sh` | GHDL compiles every library in the order of `libraries.src` and the testbench passes. |
+| `sim-ghdl.sh` | For the plain, UVVM and OSVVM testbenches, GHDL compiles every library in the order of `libraries.src` and the testbench passes. |
 | `sim-nvc.sh` | The same with NVC. |
+| `sim-vunit.sh` | VUnit runs both test cases of the VUnit testbench, with GHDL and with NVC. |
 | `sim-hog.sh` | `pre-creation.tcl` writes the hog lists the way hog runs it, then `./Hog/Do SIMULATION demo` runs the testbench with GHDL from them. |
 
 CI runs all of them on every pull request.
@@ -157,5 +221,5 @@ CI runs all of them on every pull request.
 ## License
 
 Apache License 2.0, see [LICENSE](LICENSE). The submodules keep their own
-licenses: hog is Apache-2.0, Open Logic uses the PSI HDL Library License, and
-colibri is CERN-OHL-W-2.0.
+licenses: hog, UVVM and OSVVM are Apache-2.0, Open Logic uses the PSI HDL
+Library License, and colibri is CERN-OHL-W-2.0.

@@ -1,0 +1,11 @@
+{
+  "module": "tb_top_demo_vunit",
+  "sources": [
+    "tb_top_demo_vunit.vhd"
+  ],
+  "dependencies": {
+    "work": [
+      "top_demo"
+    ]
+  }
+}

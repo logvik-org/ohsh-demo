@@ -7,3 +7,9 @@
 [submodule "lib/colibri"]
 	path = lib/colibri
 	url = https://gitlab.cern.ch/colibri/colibri.git
+[submodule "lib/uvvm"]
+	path = lib/uvvm
+	url = https://github.com/UVVM/UVVM.git
+[submodule "lib/osvvm"]
+	path = lib/osvvm
+	url = https://github.com/OSVVM/OSVVM.git

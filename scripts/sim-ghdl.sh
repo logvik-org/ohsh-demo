@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
-# Compile the testbench and everything it needs with GHDL, one library at a time
-# in the order ohsh writes to libraries.src, then run it.
+# Compile each testbench and everything it needs with GHDL, one library at a
+# time in the order ohsh writes to libraries.src, then run it.
+#
+#   scripts/sim-ghdl.sh                      # every testbench
+#   scripts/sim-ghdl.sh tb_top_demo_uvvm     # only these
 set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-BUILD="$REPO/build/ghdl"
-rm -rf "$BUILD"
-mkdir -p "$BUILD"
-GHDL_FLAGS=(--std=08 --workdir="$BUILD" -P"$BUILD" -frelaxed -Wno-hide -Wno-shared)
+# shellcheck source=scripts/testbenches.sh
+source "$REPO/scripts/testbenches.sh"
 
-ohsh -t "$REPO" -w demo -o "$BUILD" tb_top_demo
+for tb in "${TESTBENCHES[@]}"; do
+  build="$REPO/build/ghdl/$tb"
+  rm -rf "$build"
+  mkdir -p "$build"
+  # UVVM needs the Synopsys packages and relaxed rules. Every library gets
+  # the same flags so that they can be used together.
+  flags=(--std=08 --workdir="$build" -P"$build" -fsynopsys -frelaxed -Wno-hide -Wno-shared)
 
-while IFS= read -r lib; do
-  mapfile -t sources < "$BUILD/${lib}_vhdl.src"
-  ghdl -a "${GHDL_FLAGS[@]}" --work="$lib" "${sources[@]}"
-done < "$BUILD/libraries.src"
+  ohsh -t "$REPO" -w demo -o "$build" "$tb"
+  while IFS= read -r lib; do
+    mapfile -t sources < "$build/${lib}_vhdl.src"
+    ghdl -a "${flags[@]}" --work="$lib" "${sources[@]}"
+  done < "$build/libraries.src"
 
-ghdl -e "${GHDL_FLAGS[@]}" --work=demo tb_top_demo
-(cd "$BUILD" && ghdl -r "${GHDL_FLAGS[@]}" --work=demo tb_top_demo)
+  ghdl -e "${flags[@]}" --work=demo "$tb"
+  (cd "$build" && ghdl -r "${flags[@]}" --work=demo "$tb")
+done

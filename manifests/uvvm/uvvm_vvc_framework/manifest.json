@@ -1,0 +1,11 @@
+{
+  "module": "uvvm_vvc_framework",
+  "source_lists": [
+    "../../../lib/uvvm/uvvm_vvc_framework/script/compile_order.txt"
+  ],
+  "dependencies": {
+    "uvvm_util": [
+      "uvvm_util"
+    ]
+  }
+}

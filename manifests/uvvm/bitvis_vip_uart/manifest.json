@@ -1,0 +1,17 @@
+{
+  "module": "bitvis_vip_uart",
+  "source_lists": [
+    "../../../lib/uvvm/bitvis_vip_uart/script/compile_order.txt"
+  ],
+  "dependencies": {
+    "uvvm_util": [
+      "uvvm_util"
+    ],
+    "uvvm_vvc_framework": [
+      "uvvm_vvc_framework"
+    ],
+    "bitvis_vip_scoreboard": [
+      "bitvis_vip_scoreboard"
+    ]
+  }
+}

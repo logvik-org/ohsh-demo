@@ -1,0 +1,11 @@
+{
+  "module": "bitvis_vip_scoreboard",
+  "source_lists": [
+    "../../../lib/uvvm/bitvis_vip_scoreboard/script/compile_order.txt"
+  ],
+  "dependencies": {
+    "uvvm_util": [
+      "uvvm_util"
+    ]
+  }
+}
